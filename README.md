@@ -1,6 +1,6 @@
 # NBA O/U and Spread Model
 
-`NBAModel` is a model for predicting NBA totals and spreads based on team statistics from [teamrankings.com/nba](https://www.teamrankings.com/nba)
+`NBAModel` is a model for predicting NBA totals and spreads based on team statistics from [teamrankings.com/nba](https://www.teamrankings.com/nba) and previous game results
 
 # Getting Started
 
