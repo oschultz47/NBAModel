@@ -16,3 +16,8 @@
   
 'printPrediction.py' outputs the model's predictions for a certain date in a readable format  
 
+# Folders
+
+The 'predictions' folder contains relevant information about the predictions made by the model so far  
+  
+The 'models' folder contains the most recent version of the models
