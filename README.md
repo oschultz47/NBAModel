@@ -16,8 +16,10 @@
   
 'printPrediction.py' outputs the model's predictions for a certain date in a readable format  
 
-# Folders
+# Folders and Additional Files
 
 The 'predictions' folder contains relevant information about the predictions made by the model so far  
   
 The 'models' folder contains the most recent version of the models
+
+'predictionAccuracy.txt' contains the accuracy of all of the model's predictions so far
