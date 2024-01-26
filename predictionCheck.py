@@ -164,5 +164,5 @@ else:
     sumSpreadsPicked = sum(df['PickedSpread'])
     print()
 
-    print("On picks where the model differs from the total by 8 or more points, the model has predicted", totalsCorrect, "out of", sumTotalsPicked, "totals correctly, or", (str)(totalsCorrect / sumTotalsPicked * 100) + "%")
+    print("On picks where the model differs from the total by 7 or more points, the model has predicted", totalsCorrect, "out of", sumTotalsPicked, "totals correctly, or", (str)(totalsCorrect / sumTotalsPicked * 100) + "%")
     print("On picks where the model differs from the spread by 5 or more points, the model has predicted", spreadsCorrect, "out of", sumSpreadsPicked, "spreads correctly, or", (str)(spreadsCorrect / sumSpreadsPicked * 100) + "%")
