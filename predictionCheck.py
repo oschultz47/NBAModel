@@ -117,37 +117,52 @@ actualTotal = 0
 
 totalsCorrect = 0
 spreadsCorrect = 0
+allTotalsCorrect = 0
+allSpreadsCorrect = 0
 
 for index, row in df.iterrows():
     #find the actual spread and total for the game
     actualSpread = scores.loc[(scores['Date'] == row['Date']) & (scores['Visitor/Neutral'] == row['AwayTeam']) & (scores['Home/Neutral'] == row['HomeTeam'])]['PTS.1'].values[0] - scores.loc[(scores['Date'] == row['Date']) & (scores['Visitor/Neutral'] == row['AwayTeam']) & (scores['Home/Neutral'] == row['HomeTeam'])]['PTS'].values[0]
     actualTotal = scores.loc[(scores['Date'] == row['Date']) & (scores['Visitor/Neutral'] == row['AwayTeam']) & (scores['Home/Neutral'] == row['HomeTeam'])]['PTS'].values[0] + scores.loc[(scores['Date'] == row['Date']) & (scores['Visitor/Neutral'] == row['AwayTeam']) & (scores['Home/Neutral'] == row['HomeTeam'])]['PTS.1'].values[0]
-    if row['PickedTotal'] == 1:
-        if row['TotalPredictions'] > row['Line']:
-            if actualTotal > row['Line']:
+    if row['TotalPredictions'] > row['Line']:
+        if actualTotal > row['Line']:
+            allTotalsCorrect += 1
+            if row['PickedTotal'] == 1:
                 totalsCorrect += 1
-            else:
-                continue
         else:
-            if actualTotal < row['Line']:
+            continue
+    else:
+        if actualTotal < row['Line']:
+            allTotalsCorrect += 1
+            if row['PickedTotal'] == 1:
                 totalsCorrect += 1
-            else:
-                continue
-    elif row['PickedSpread'] == 1:
-        if row['SpreadPredictions'] > row['Line']:
-            if actualSpread > row['Line']:
-                spreadsCorrect += 1
-            else:
-                continue
         else:
-            if actualSpread < row['Line']:
+            continue
+    if row['SpreadPredictions'] > row['Spread']:
+        if actualSpread > row['Spread']:
+            allSpreadsCorrect += 1
+            if row['PickedSpread'] == 1:
                 spreadsCorrect += 1
-            else:
-                continue
+        else:
+            continue
+    else:
+        if actualSpread < row['Line']:
+            allSpreadsCorrect += 1
+            if row['PickedSpread'] == 1:
+                spreadsCorrect += 1
+        else:
+            continue
 
 
 if len(df) == 0:
     print("No games have been predicted yet (or they're all in the future)")
 else:
-    print("The model has predicted", totalsCorrect, "out of", len(df), "totals correctly, or", (str)(totalsCorrect / len(df) * 100) + "%")
-    print("The model has predicted", spreadsCorrect, "out of", len(df), "spreads correctly, or", (str)(spreadsCorrect / len(df) * 100) + "%")
+    print("The model has predicted", allTotalsCorrect, "out of", len(df), "totals correctly, or", (str)(totalsCorrect / len(df) * 100) + "%")
+    print("The model has predicted", allSpreadsCorrect, "out of", len(df), "spreads correctly, or", (str)(spreadsCorrect / len(df) * 100) + "%")
+
+    sumTotalsPicked = sum(df['PickedTotal'])
+    sumSpreadsPicked = sum(df['PickedSpread'])
+    print()
+
+    print("On picks where the model differs from the total by 8 or more points, the model has predicted", totalsCorrect, "out of", sumTotalsPicked, "totals correctly, or", (str)(totalsCorrect / sumTotalsPicked * 100) + "%")
+    print("On picks where the model differs from the spread by 5 or more points, the model has predicted", spreadsCorrect, "out of", sumSpreadsPicked, "spreads correctly, or", (str)(spreadsCorrect / sumSpreadsPicked * 100) + "%")

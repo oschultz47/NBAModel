@@ -12,9 +12,14 @@ import os.path
 lines = pd.DataFrame()
 
 i=0
+temp = 0
 while 1:
     try:
         gameLine = pd.read_html('https://www.espn.com/nba/lines/_/date')[i]
+        if((int)(gameLine.columns[0].split(':')[0]) < temp):
+            break
+        temp = gameLine.columns[0] 
+        temp = (int)(temp.split(':')[0])
         lines.loc[i, 'Line'] = gameLine.loc[0, 'LINE']
         lines.loc[i, 'Spread'] = -1 * (gameLine.loc[1, 'LINE'])
         if(lines.loc[i, 'Line'] < 100):
@@ -428,10 +433,10 @@ print()
 for index, row in todayTeams.iterrows():
     if row['SpreadPredictions'] > row['Spread'] + 5:
         if(row['Spread'] > 0):
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
+            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
             todayTeams.loc[index, 'PickedSpread'] += 1
         else:
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): ' + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
+            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
             todayTeams.loc[index, 'PickedSpread'] += 1
     elif row['SpreadPredictions'] < row['Spread'] - 5:
         if(row['Spread'] > 0):
@@ -445,6 +450,5 @@ for index, row in todayTeams.iterrows():
 print()
 
 # make a csv file with the predictions
-todayTeams = todayTeams[(todayTeams['PickedSpread'] != 0) | (todayTeams['PickedTotal'] != 0)]
 todayTeams['Date'] = date
 todayTeams.to_csv(nameString, index=False)
