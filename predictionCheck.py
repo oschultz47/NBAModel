@@ -1,5 +1,6 @@
 import pandas as pd
 import time
+import sys
 
 # read in all the data from the csv files in the predictions folder
 # and store them in one dataframe
@@ -88,12 +89,13 @@ scores['Date'] = pd.to_datetime(scores['Date'])
 #convert date to string in 01-01-2020 format
 scores['Date'] = scores['Date'].dt.strftime('%m-%d-%Y')
 
+saveFile = False
+
 #print(scores.head())
 while 1:
     try:
         date = input('Enter the date of the games you want to see (MM-DD-YYYY): ')
-
-        if(date == '' or date == 'a' or date == 'all' or date == 'A' or date == 'All' or date == 'ALL'):
+        if(date == '' or date == 'a' or date == 'all' or date == 'A' or date == 'All' or date == 'ALL' or date == 'f' or date == 'F' or date == 'FILE' or date == 'file' or date == 'File'):
             # create a list of every file in the predictions folder
             # and store the names in a list
             import os
@@ -118,7 +120,6 @@ while 1:
             print()
             print('Prediction results from all games:')
             print()
-            break
         elif(date == 'y' or date == 'yesterday' or date == 'Y' or date == 'Yesterday' or date == 'YESTERDAY'):
             date = time.strftime('%m-%d-%Y', time.localtime(time.time() - 86400))
             path = 'predictions/predictions' + date + '.csv'
@@ -126,14 +127,16 @@ while 1:
             print()
             print('Prediction results from', (str)(date) + ':')
             print()
-            break
         else:
             path = 'predictions/predictions' + date + '.csv'
             df = pd.read_csv(path)
             print()
             print('Prediction results from', (str)(date) + ':')
             print()
-            break
+        if(date == 'f' or date == 'F' or date == 'FILE' or date == 'file' or date == 'File'):
+            sys.stdout = open('predictionAccuracy.txt', 'w')
+            print('Prediction results from all games: \n')
+        break
     except:
         print('No predictions for', date, '. Try again.')
         continue

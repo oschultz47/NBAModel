@@ -1,0 +1,11 @@
+Prediction results from all games: 
+
+The model predicted 4 out of 7 totals correctly, or 57.14%
+The model predicted 4 out of 7 spreads correctly, or 57.14%
+
+The model predicted 8 out of 14 picks correctly, or 57.14%
+
+On picks where the model differed from the total by 7 or more points, the model predicted 1 out of 2 totals correctly, or 50.0%
+On picks where the model differed from the spread by 5 or more points, the model predicted 1 out of 2 spreads correctly, or 50.0%
+
+On picks where the model was "confident" it picked 2 out of 4 picks correctly, or 50.0%
