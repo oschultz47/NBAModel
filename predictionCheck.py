@@ -1,4 +1,5 @@
 import pandas as pd
+import time
 
 # read in all the data from the csv files in the predictions folder
 # and store them in one dataframe
@@ -88,28 +89,54 @@ scores['Date'] = pd.to_datetime(scores['Date'])
 scores['Date'] = scores['Date'].dt.strftime('%m-%d-%Y')
 
 #print(scores.head())
+while 1:
+    try:
+        date = input('Enter the date of the games you want to see (MM-DD-YYYY): ')
 
-# create a list of every file in the predictions folder
-# and store the names in a list
-import os
-path = 'predictions/'
-files = os.listdir(path)
+        if(date == '' or date == 'a' or date == 'all' or date == 'A' or date == 'All' or date == 'ALL'):
+            # create a list of every file in the predictions folder
+            # and store the names in a list
+            import os
+            path = 'predictions/'
+            files = os.listdir(path)
 
-# loop through the list of files and read them into a dataframe
-# then append the dataframe to the main dataframe
+            # loop through the list of files and read them into a dataframe
+            # then append the dataframe to the main dataframe
 
-tempdf = pd.DataFrame()
+            tempdf = pd.DataFrame()
 
-for file in files:
-    tempdf = pd.read_csv(path + file)
-    df = df.append(tempdf, ignore_index=True)
+            for file in files:
+                tempdf = pd.read_csv(path + file)
+                df = df.append(tempdf, ignore_index=True)
 
-#print(df.head())
-    
-# drop all rows where the date is today or in the future
-import datetime
-today = datetime.datetime.today().strftime('%m-%d-%Y')
-df = df[df['Date'] < today]
+            #print(df.head())
+
+            # drop all rows where the date is today or in the future
+            import datetime
+            today = datetime.datetime.today().strftime('%m-%d-%Y')
+            df = df[df['Date'] < today]
+            print()
+            print('Prediction results from all games:')
+            print()
+            break
+        elif(date == 'y' or date == 'yesterday' or date == 'Y' or date == 'Yesterday' or date == 'YESTERDAY'):
+            date = time.strftime('%m-%d-%Y', time.localtime(time.time() - 86400))
+            path = 'predictions/predictions' + date + '.csv'
+            df = pd.read_csv(path)
+            print()
+            print('Prediction results from', (str)(date) + ':')
+            print()
+            break
+        else:
+            path = 'predictions/predictions' + date + '.csv'
+            df = pd.read_csv(path)
+            print()
+            print('Prediction results from', (str)(date) + ':')
+            print()
+            break
+    except:
+        print('No predictions for', date, '. Try again.')
+        continue
 
 
 actualSpread = 0
@@ -129,40 +156,44 @@ for index, row in df.iterrows():
             allTotalsCorrect += 1
             if row['PickedTotal'] == 1:
                 totalsCorrect += 1
-        else:
-            continue
     else:
         if actualTotal < row['Line']:
             allTotalsCorrect += 1
             if row['PickedTotal'] == 1:
                 totalsCorrect += 1
-        else:
-            continue
-    if row['SpreadPredictions'] > row['Spread']:
+    if (row['SpreadPredictions'] > row['Spread']):
         if actualSpread > row['Spread']:
             allSpreadsCorrect += 1
             if row['PickedSpread'] == 1:
                 spreadsCorrect += 1
-        else:
-            continue
     else:
-        if actualSpread < row['Line']:
+        if actualSpread < row['Spread']:
             allSpreadsCorrect += 1
+            print(row['HomeTeam'])
             if row['PickedSpread'] == 1:
                 spreadsCorrect += 1
-        else:
-            continue
 
+#truncate decimals after 2 places
 
 if len(df) == 0:
     print("No games have been predicted yet (or they're all in the future)")
 else:
-    print("The model has predicted", allTotalsCorrect, "out of", len(df), "totals correctly, or", (str)(totalsCorrect / len(df) * 100) + "%")
-    print("The model has predicted", allSpreadsCorrect, "out of", len(df), "spreads correctly, or", (str)(spreadsCorrect / len(df) * 100) + "%")
+
+    print("The model predicted", allTotalsCorrect, "out of", len(df), "totals correctly, or", (str)((int)(allTotalsCorrect / len(df) * 10000)/100) + "%")
+    print("The model predicted", allSpreadsCorrect, "out of", len(df), "spreads correctly, or", (str)((int)(allSpreadsCorrect / len(df) * 10000)/100) + "%")
+
+    print()
+
+    print("The model predicted", allTotalsCorrect + allSpreadsCorrect, "out of", len(df) * 2, "picks correctly, or", (str)((int)((allTotalsCorrect + allSpreadsCorrect) / (len(df) * 2) * 10000)/ 100) + "%")
+
 
     sumTotalsPicked = sum(df['PickedTotal'])
     sumSpreadsPicked = sum(df['PickedSpread'])
     print()
 
-    print("On picks where the model differs from the total by 7 or more points, the model has predicted", totalsCorrect, "out of", sumTotalsPicked, "totals correctly, or", (str)(totalsCorrect / sumTotalsPicked * 100) + "%")
-    print("On picks where the model differs from the spread by 5 or more points, the model has predicted", spreadsCorrect, "out of", sumSpreadsPicked, "spreads correctly, or", (str)(spreadsCorrect / sumSpreadsPicked * 100) + "%")
+    print("On picks where the model differed from the total by 7 or more points, the model predicted", totalsCorrect, "out of", sumTotalsPicked, "totals correctly, or", (str)((int)(totalsCorrect / sumTotalsPicked * 10000)/100) + "%")
+    print("On picks where the model differed from the spread by 5 or more points, the model predicted", spreadsCorrect, "out of", sumSpreadsPicked, "spreads correctly, or", (str)((int)(spreadsCorrect / sumSpreadsPicked * 10000)/100) + "%")
+
+    print()
+
+    print("On picks where the model was \"confident\" it picked", totalsCorrect + spreadsCorrect, "out of", sumTotalsPicked + sumSpreadsPicked, "picks correctly, or", (str)((int)((totalsCorrect + spreadsCorrect) / (sumTotalsPicked + sumSpreadsPicked) * 10000)/100) + "%")
