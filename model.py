@@ -305,11 +305,11 @@ if(modelMake):
 
     spreadsModel.fit(games, spreads, epochs=200, batch_size=32)
 
-    totalsModel.save('totalsModel.h5')
-    spreadsModel.save('spreadsModel.h5')
+    totalsModel.save('models/totalsModel.h5')
+    spreadsModel.save('models/spreadsModel.h5')
 else:
-    totalsModel = load_model('totalsModel.h5')
-    spreadsModel = load_model('spreadsModel.h5')
+    totalsModel = load_model('models/totalsModel.h5')
+    spreadsModel = load_model('models/spreadsModel.h5')
 
 ##test the model using the test data
 #PredictedScores = model.predict(test)
