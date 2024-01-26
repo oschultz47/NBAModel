@@ -10,7 +10,7 @@
 
 ## Usage
 
-'model.py' is used to compile the models and generate predictions for today's games
-'predictionCheck.py' checks the accuracy of the model's predictions on a certain date (or input 'all' to check all of the model's predictions)
-'printPrediction.py' outputs the model's predictions for a certain date in a readable format
+'model.py' is used to compile the models and generate predictions for today's games  
+'predictionCheck.py' checks the accuracy of the model's predictions on a certain date (or input 'all' to check all of the model's predictions)  
+'printPrediction.py' outputs the model's predictions for a certain date in a readable format  
 
