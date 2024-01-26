@@ -149,6 +149,7 @@ totalsCorrect = 0
 spreadsCorrect = 0
 allTotalsCorrect = 0
 allSpreadsCorrect = 0
+winnersCorrect = 0
 
 for index, row in df.iterrows():
     #find the actual spread and total for the game
@@ -176,6 +177,9 @@ for index, row in df.iterrows():
             if row['PickedSpread'] == 1:
                 spreadsCorrect += 1
 
+    if(row['SpreadPredictions'] * actualSpread > 0):
+        winnersCorrect += 1
+
 #truncate decimals after 2 places
 
 if len(df) == 0:
@@ -184,6 +188,7 @@ else:
 
     print("The model predicted", allTotalsCorrect, "out of", len(df), "totals correctly, or", (str)((int)(allTotalsCorrect / len(df) * 10000)/100) + "%")
     print("The model predicted", allSpreadsCorrect, "out of", len(df), "spreads correctly, or", (str)((int)(allSpreadsCorrect / len(df) * 10000)/100) + "%")
+    print("The model predicted", winnersCorrect, "out of", len(df), "winners correctly, or", (str)((int)(winnersCorrect / len(df) * 10000)/100) + "%")
 
     print()
 

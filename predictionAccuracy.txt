@@ -2,6 +2,7 @@ Prediction results from all games:
 
 The model predicted 4 out of 7 totals correctly, or 57.14%
 The model predicted 4 out of 7 spreads correctly, or 57.14%
+The model predicted 6 out of 7 winners correctly, or 85.71%
 
 The model predicted 8 out of 14 picks correctly, or 57.14%
 
