@@ -95,6 +95,9 @@ saveFile = False
 while 1:
     try:
         date = input('Enter the date of the games you want to see (MM-DD-YYYY): ')
+        if(date == 'f' or date == 'F' or date == 'FILE' or date == 'file' or date == 'File'):
+            print('Printing results to predictionAccuracy.txt...')
+            sys.stdout = open('predictionAccuracy.txt', 'w')
         if(date == '' or date == 'a' or date == 'all' or date == 'A' or date == 'All' or date == 'ALL' or date == 'f' or date == 'F' or date == 'FILE' or date == 'file' or date == 'File'):
             # create a list of every file in the predictions folder
             # and store the names in a list
@@ -117,7 +120,8 @@ while 1:
             import datetime
             today = datetime.datetime.today().strftime('%m-%d-%Y')
             df = df[df['Date'] < today]
-            print()
+            if(date == '' or date == 'a' or date == 'all' or date == 'A' or date == 'All' or date == 'ALL'):
+                print()
             print('Prediction results from all games:')
             print()
         elif(date == 'y' or date == 'yesterday' or date == 'Y' or date == 'Yesterday' or date == 'YESTERDAY'):
@@ -133,9 +137,6 @@ while 1:
             print()
             print('Prediction results from', (str)(date) + ':')
             print()
-        if(date == 'f' or date == 'F' or date == 'FILE' or date == 'file' or date == 'File'):
-            sys.stdout = open('predictionAccuracy.txt', 'w')
-            print('Prediction results from all games: \n')
         break
     except:
         print('No predictions for', date, '. Try again.')
@@ -173,7 +174,6 @@ for index, row in df.iterrows():
     else:
         if actualSpread < row['Spread']:
             allSpreadsCorrect += 1
-            print(row['HomeTeam'])
             if row['PickedSpread'] == 1:
                 spreadsCorrect += 1
 
@@ -205,3 +205,7 @@ else:
     print()
 
     print("On picks where the model was \"confident\" it picked", totalsCorrect + spreadsCorrect, "out of", sumTotalsPicked + sumSpreadsPicked, "picks correctly, or", (str)((int)((totalsCorrect + spreadsCorrect) / (sumTotalsPicked + sumSpreadsPicked) * 10000)/100) + "%")
+
+    if(date == 'f' or date == 'F' or date == 'FILE' or date == 'file' or date == 'File'):
+            sys.stdout = sys.__stdout__
+            print('Complete.')
