@@ -183,7 +183,7 @@ for index, row in df.iterrows():
 #truncate decimals after 2 places
 
 if len(df) == 0:
-    print("No games have been predicted yet (or they're all in the future)")
+    print("The model doesn't have any predictions for that time frame.")
 else:
 
     print("The model predicted", allTotalsCorrect, "out of", len(df), "totals correctly, or", (str)((int)(allTotalsCorrect / len(df) * 10000)/100) + "%")
@@ -198,9 +198,14 @@ else:
     sumTotalsPicked = sum(df['PickedTotal'])
     sumSpreadsPicked = sum(df['PickedSpread'])
     print()
-
-    print("On picks where the model differed from the total by 7 or more points, the model predicted", totalsCorrect, "out of", sumTotalsPicked, "totals correctly, or", (str)((int)(totalsCorrect / sumTotalsPicked * 10000)/100) + "%")
-    print("On picks where the model differed from the spread by 5 or more points, the model predicted", spreadsCorrect, "out of", sumSpreadsPicked, "spreads correctly, or", (str)((int)(spreadsCorrect / sumSpreadsPicked * 10000)/100) + "%")
+    if sumTotalsPicked == 0:
+        print("The model didn't have any \"confident\" totals picks in that time frame.")
+    else:
+        print("On picks where the model differed from the total by 7 or more points, the model predicted", totalsCorrect, "out of", sumTotalsPicked, "totals correctly, or", (str)((int)(totalsCorrect / sumTotalsPicked * 10000)/100) + "%")
+    if sumSpreadsPicked == 0:
+        print("The model didn't have any \"confident\" spreads picks in that time frame.")
+    else:
+        print("On picks where the model differed from the spread by 5 or more points, the model predicted", spreadsCorrect, "out of", sumSpreadsPicked, "spreads correctly, or", (str)((int)(spreadsCorrect / sumSpreadsPicked * 10000)/100) + "%")
 
     print()
 
