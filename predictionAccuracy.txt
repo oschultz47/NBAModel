@@ -1,12 +1,12 @@
 Prediction results from all games:
 
-The model predicted 225 out of 420 totals correctly, or 53.57%
-The model predicted 209 out of 420 spreads correctly, or 49.76%
-The model predicted 274 out of 420 winners correctly, or 65.23%
+The model predicted 258 out of 474 totals correctly, or 54.43%
+The model predicted 239 out of 474 spreads correctly, or 50.42%
+The model predicted 310 out of 474 winners correctly, or 65.4%
 
-The model predicted 434 out of 840 picks correctly, or 51.66%
+The model predicted 497 out of 948 picks correctly, or 52.42%
 
-On picks where the model differed from the total by 7 or more points, the model predicted 93 out of 167 totals correctly, or 55.68%
-On picks where the model differed from the spread by 5 or more points, the model predicted 68 out of 137 spreads correctly, or 49.63%
+On picks where the model differed from the total by 7 or more points, the model predicted 114 out of 197 totals correctly, or 57.86%
+On picks where the model differed from the spread by 5 or more points, the model predicted 79 out of 155 spreads correctly, or 50.96%
 
-On picks where the model was "confident" it picked 161 out of 304 picks correctly, or 52.96%
+On picks where the model was "confident" it picked 193 out of 352 picks correctly, or 54.82%
