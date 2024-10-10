@@ -6,13 +6,13 @@ import sys
 # and store them in one dataframe
 df = pd.DataFrame()
 
-scoresOct = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games.html')[0]
-scoresNov = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-november.html')[0]
-scoresDec = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-december.html')[0]
-scoresJan = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-january.html')[0]
-scoresFeb = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-february.html')[0]
-scoresMar = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-march.html')[0]
-scoresApr = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-april.html')[0]
+scoresOct = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games.html')[0]
+scoresNov = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-november.html')[0]
+scoresDec = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-december.html')[0]
+scoresJan = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-january.html')[0]
+scoresFeb = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-february.html')[0]
+scoresMar = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-march.html')[0]
+scoresApr = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-april.html')[0]
 
 scoresOct.drop(['Start (ET)', 'Unnamed: 6', 'Unnamed: 7', 'Attend.', 'Notes', 'Arena'], axis=1, inplace=True)
 scoresNov.drop(['Start (ET)', 'Unnamed: 6', 'Unnamed: 7', 'Attend.', 'Notes', 'Arena'], axis=1, inplace=True)

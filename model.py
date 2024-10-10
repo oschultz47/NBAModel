@@ -110,13 +110,13 @@ possesions = pd.read_html('https://www.teamrankings.com/nba/stat/possessions-per
 epr = pd.read_html('https://www.teamrankings.com/nba/stat/effective-possession-ratio')[0]
 oepr = pd.read_html('https://www.teamrankings.com/nba/stat/opponent-effective-possession-ratio')[0]
 
-scoresOct = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games.html')[0]
-scoresNov = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-november.html')[0]
-scoresDec = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-december.html')[0]
-scoresJan = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-january.html')[0]
-scoresFeb = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-february.html')[0]
-scoresMar = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-march.html')[0]
-scoresApr = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2024_games-april.html')[0]
+scoresOct = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games.html')[0]
+scoresNov = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-november.html')[0]
+scoresDec = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-december.html')[0]
+scoresJan = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-january.html')[0]
+scoresFeb = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-february.html')[0]
+scoresMar = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-march.html')[0]
+scoresApr = pd.read_html('https://www.basketball-reference.com/leagues/NBA_2025_games-april.html')[0]
 
 scoresOct.drop(['Start (ET)', 'Unnamed: 6', 'Unnamed: 7', 'Attend.', 'Notes', 'Arena'], axis=1, inplace=True)
 scoresNov.drop(['Start (ET)', 'Unnamed: 6', 'Unnamed: 7', 'Attend.', 'Notes', 'Arena'], axis=1, inplace=True)
@@ -126,46 +126,46 @@ scoresFeb.drop(['Start (ET)', 'Unnamed: 6', 'Unnamed: 7', 'Attend.', 'Notes', 'A
 scoresMar.drop(['Start (ET)', 'Unnamed: 6', 'Unnamed: 7', 'Attend.', 'Notes', 'Arena'], axis=1, inplace=True)
 scoresApr.drop(['Start (ET)', 'Unnamed: 6', 'Unnamed: 7', 'Attend.', 'Notes', 'Arena'], axis=1, inplace=True)
 
-ppg.drop(['Rank', '2022'], axis=1, inplace=True)
-oe.drop(['Rank', '2022'], axis=1, inplace=True)
-pip.drop(['Rank', '2022'], axis=1, inplace=True)
-fbp.drop(['Rank', '2022'], axis=1, inplace=True)
-tp.drop(['Rank', '2022'], axis=1, inplace=True)
-ftp.drop(['Rank', '2022'], axis=1, inplace=True)
-trb.drop(['Rank', '2022'], axis=1, inplace=True)
-fpg.drop(['Rank', '2022'], axis=1, inplace=True)
-oppg.drop(['Rank', '2022'], axis=1, inplace=True)
-de.drop(['Rank', '2022'], axis=1, inplace=True)
-opip.drop(['Rank', '2022'], axis=1, inplace=True)
-ofbp.drop(['Rank', '2022'], axis=1, inplace=True)
-otp.drop(['Rank', '2022'], axis=1, inplace=True)
-otrb.drop(['Rank', '2022'], axis=1, inplace=True)
-ofpg.drop(['Rank', '2022'], axis=1, inplace=True)
-possesions.drop(['Rank', '2022'], axis=1, inplace=True)
-epr.drop(['Rank', '2022'], axis=1, inplace=True)
-oepr.drop(['Rank', '2022'], axis=1, inplace=True)
+ppg.drop(['Rank', '2023'], axis=1, inplace=True)
+oe.drop(['Rank', '2023'], axis=1, inplace=True)
+pip.drop(['Rank', '2023'], axis=1, inplace=True)
+fbp.drop(['Rank', '2023'], axis=1, inplace=True)
+tp.drop(['Rank', '2023'], axis=1, inplace=True)
+ftp.drop(['Rank', '2023'], axis=1, inplace=True)
+trb.drop(['Rank', '2023'], axis=1, inplace=True)
+fpg.drop(['Rank', '2023'], axis=1, inplace=True)
+oppg.drop(['Rank', '2023'], axis=1, inplace=True)
+de.drop(['Rank', '2023'], axis=1, inplace=True)
+opip.drop(['Rank', '2023'], axis=1, inplace=True)
+ofbp.drop(['Rank', '2023'], axis=1, inplace=True)
+otp.drop(['Rank', '2023'], axis=1, inplace=True)
+otrb.drop(['Rank', '2023'], axis=1, inplace=True)
+ofpg.drop(['Rank', '2023'], axis=1, inplace=True)
+possesions.drop(['Rank', '2023'], axis=1, inplace=True)
+epr.drop(['Rank', '2023'], axis=1, inplace=True)
+oepr.drop(['Rank', '2023'], axis=1, inplace=True)
 
-ppg.columns = ['Team', '2023PPG', 'L3PPG', 'L1PPG', 'HomePPG', 'AwayPPG']
-oe.columns = ['Team', '2023OE', 'L3OE', 'L1OE', 'HomeOE', 'AwayOE']
-pip.columns = ['Team', '2023PIP', 'L3PIP', 'L1PIP', 'HomePIP', 'AwayPIP']
-fbp.columns = ['Team', '2023FBP', 'L3FBP', 'L1FBP', 'HomeFBP', 'AwayFBP']
-tp.columns = ['Team', '2023TP', 'L3TP', 'L1TP', 'HomeTP', 'AwayTP']
-ftp.columns = ['Team', '2023FTP', 'L3FTP', 'L1FTP', 'HomeFTP', 'AwayFTP']
-trb.columns = ['Team', '2023TRB', 'L3TRB', 'L1TRB', 'HomeTRB', 'AwayTRB']
-fpg.columns = ['Team', '2023FPG', 'L3FPG', 'L1FPG', 'HomeFPG', 'AwayFPG']
-oppg.columns = ['Team', '2023OPPG', 'L3OPPG', 'L1OPPG', 'HomeOPPG', 'AwayOPPG']
-de.columns = ['Team', '2023DE', 'L3DE', 'L1DE', 'HomeDE', 'AwayDE']
-opip.columns = ['Team', '2023OPIP', 'L3OPIP', 'L1OPIP', 'HomeOPIP', 'AwayOPIP']
-ofbp.columns = ['Team', '2023OFBP', 'L3OFBP', 'L1OFBP', 'HomeOFBP', 'AwayOFBP']
-otp.columns = ['Team', '2023OTP', 'L3OTP', 'L1OTP', 'HomeOTP', 'AwayOTP']
-otrb.columns = ['Team', '2023OTRB', 'L3OTRB', 'L1OTRB', 'HomeOTRB', 'AwayOTRB']
-ofpg.columns = ['Team', '2023OFPG', 'L3OFPG', 'L1OFPG', 'HomeOFPG', 'AwayOFPG']
-possesions.columns = ['Team', '2023Poss', 'L3Poss', 'L1Poss', 'HomePoss', 'AwayPoss']
-epr.columns = ['Team', '2023EPR', 'L3EPR', 'L1EPR', 'HomeEPR', 'AwayEPR']
-oepr.columns = ['Team', '2023OEPR', 'L3OEPR', 'L1OEPR', 'HomeOEPR', 'AwayOEPR']
+ppg.columns = ['Team', '2024PPG', 'L3PPG', 'L1PPG', 'HomePPG', 'AwayPPG']
+oe.columns = ['Team', '2024OE', 'L3OE', 'L1OE', 'HomeOE', 'AwayOE']
+pip.columns = ['Team', '2024PIP', 'L3PIP', 'L1PIP', 'HomePIP', 'AwayPIP']
+fbp.columns = ['Team', '2024FBP', 'L3FBP', 'L1FBP', 'HomeFBP', 'AwayFBP']
+tp.columns = ['Team', '2024TP', 'L3TP', 'L1TP', 'HomeTP', 'AwayTP']
+ftp.columns = ['Team', '2024FTP', 'L3FTP', 'L1FTP', 'HomeFTP', 'AwayFTP']
+trb.columns = ['Team', '2024TRB', 'L3TRB', 'L1TRB', 'HomeTRB', 'AwayTRB']
+fpg.columns = ['Team', '2024FPG', 'L3FPG', 'L1FPG', 'HomeFPG', 'AwayFPG']
+oppg.columns = ['Team', '2024OPPG', 'L3OPPG', 'L1OPPG', 'HomeOPPG', 'AwayOPPG']
+de.columns = ['Team', '2024DE', 'L3DE', 'L1DE', 'HomeDE', 'AwayDE']
+opip.columns = ['Team', '2024OPIP', 'L3OPIP', 'L1OPIP', 'HomeOPIP', 'AwayOPIP']
+ofbp.columns = ['Team', '2024OFBP', 'L3OFBP', 'L1OFBP', 'HomeOFBP', 'AwayOFBP']
+otp.columns = ['Team', '2024OTP', 'L3OTP', 'L1OTP', 'HomeOTP', 'AwayOTP']
+otrb.columns = ['Team', '2024OTRB', 'L3OTRB', 'L1OTRB', 'HomeOTRB', 'AwayOTRB']
+ofpg.columns = ['Team', '2024OFPG', 'L3OFPG', 'L1OFPG', 'HomeOFPG', 'AwayOFPG']
+possesions.columns = ['Team', '2024Poss', 'L3Poss', 'L1Poss', 'HomePoss', 'AwayPoss']
+epr.columns = ['Team', '2024EPR', 'L3EPR', 'L1EPR', 'HomeEPR', 'AwayEPR']
+oepr.columns = ['Team', '2024OEPR', 'L3OEPR', 'L1OEPR', 'HomeOEPR', 'AwayOEPR']
 
 #free throw percentage is a string, convert to float
-ftp['2023FTP'] = ftp['2023FTP'].str.replace('%', '').astype(float)
+ftp['2024FTP'] = ftp['2024FTP'].str.replace('%', '').astype(float)
 ftp['L3FTP'] = ftp['L3FTP'].str.replace('%', '').astype(float)
 ftp['L1FTP'] = ftp['L1FTP'].str.replace('%', '').astype(float)
 ftp['HomeFTP'] = ftp['HomeFTP'].str.replace('%', '').astype(float)
