@@ -6,90 +6,120 @@ from keras.layers import Dense
 
 from keras.models import load_model
 
+import requests
+
+
 import datetime
 import os.path
 
 def nameToCity(df):
-    df['Visitor/Neutral'].replace('Atlanta Hawks', 'Atlanta', inplace=True)
-    df['Home/Neutral'].replace('Atlanta Hawks', 'Atlanta', inplace=True)
-    df['Visitor/Neutral'].replace('Boston Celtics', 'Boston', inplace=True)
-    df['Home/Neutral'].replace('Boston Celtics', 'Boston', inplace=True)
-    df['Visitor/Neutral'].replace('Brooklyn Nets', 'Brooklyn', inplace=True)
-    df['Home/Neutral'].replace('Brooklyn Nets', 'Brooklyn', inplace=True)
-    df['Visitor/Neutral'].replace('Charlotte Hornets', 'Charlotte', inplace=True)
-    df['Home/Neutral'].replace('Charlotte Hornets', 'Charlotte', inplace=True)
-    df['Visitor/Neutral'].replace('Chicago Bulls', 'Chicago', inplace=True)
-    df['Home/Neutral'].replace('Chicago Bulls', 'Chicago', inplace=True)
-    df['Visitor/Neutral'].replace('Cleveland Cavaliers', 'Cleveland', inplace=True)
-    df['Home/Neutral'].replace('Cleveland Cavaliers', 'Cleveland', inplace=True)
-    df['Visitor/Neutral'].replace('Dallas Mavericks', 'Dallas', inplace=True)
-    df['Home/Neutral'].replace('Dallas Mavericks', 'Dallas', inplace=True)
-    df['Visitor/Neutral'].replace('Denver Nuggets', 'Denver', inplace=True)
-    df['Home/Neutral'].replace('Denver Nuggets', 'Denver', inplace=True)
-    df['Visitor/Neutral'].replace('Detroit Pistons', 'Detroit', inplace=True)
-    df['Home/Neutral'].replace('Detroit Pistons', 'Detroit', inplace=True)
-    df['Visitor/Neutral'].replace('Golden State Warriors', 'Golden State', inplace=True)
-    df['Home/Neutral'].replace('Golden State Warriors', 'Golden State', inplace=True)
-    df['Visitor/Neutral'].replace('Houston Rockets', 'Houston', inplace=True)
-    df['Home/Neutral'].replace('Houston Rockets', 'Houston', inplace=True)
-    df['Visitor/Neutral'].replace('Indiana Pacers', 'Indiana', inplace=True)
-    df['Home/Neutral'].replace('Indiana Pacers', 'Indiana', inplace=True)
-    df['Visitor/Neutral'].replace('Los Angeles Clippers', 'LA Clippers', inplace=True)
-    df['Home/Neutral'].replace('Los Angeles Clippers', 'LA Clippers', inplace=True)
-    df['Visitor/Neutral'].replace('Los Angeles Lakers', 'LA Lakers', inplace=True)
-    df['Home/Neutral'].replace('Los Angeles Lakers', 'LA Lakers', inplace=True)
-    df['Visitor/Neutral'].replace('Memphis Grizzlies', 'Memphis', inplace=True) 
-    df['Home/Neutral'].replace('Memphis Grizzlies', 'Memphis', inplace=True)
-    df['Visitor/Neutral'].replace('Miami Heat', 'Miami', inplace=True)
-    df['Home/Neutral'].replace('Miami Heat', 'Miami', inplace=True)
-    df['Visitor/Neutral'].replace('Milwaukee Bucks', 'Milwaukee', inplace=True)
-    df['Home/Neutral'].replace('Milwaukee Bucks', 'Milwaukee', inplace=True)
-    df['Visitor/Neutral'].replace('Minnesota Timberwolves', 'Minnesota', inplace=True)
-    df['Home/Neutral'].replace('Minnesota Timberwolves', 'Minnesota', inplace=True)
-    df['Visitor/Neutral'].replace('New Orleans Pelicans', 'New Orleans', inplace=True)
-    df['Home/Neutral'].replace('New Orleans Pelicans', 'New Orleans', inplace=True)
-    df['Visitor/Neutral'].replace('New York Knicks', 'New York', inplace=True)
-    df['Home/Neutral'].replace('New York Knicks', 'New York', inplace=True)
-    df['Visitor/Neutral'].replace('Oklahoma City Thunder', 'Okla City', inplace=True)
-    df['Home/Neutral'].replace('Oklahoma City Thunder', 'Okla City', inplace=True)
-    df['Visitor/Neutral'].replace('Orlando Magic', 'Orlando', inplace=True)
-    df['Home/Neutral'].replace('Orlando Magic', 'Orlando', inplace=True)
-    df['Visitor/Neutral'].replace('Philadelphia 76ers', 'Philadelphia', inplace=True)
-    df['Home/Neutral'].replace('Philadelphia 76ers', 'Philadelphia', inplace=True)
-    df['Visitor/Neutral'].replace('Phoenix Suns', 'Phoenix', inplace=True)
-    df['Home/Neutral'].replace('Phoenix Suns', 'Phoenix', inplace=True)
-    df['Visitor/Neutral'].replace('Portland Trail Blazers', 'Portland', inplace=True)
-    df['Home/Neutral'].replace('Portland Trail Blazers', 'Portland', inplace=True)
-    df['Visitor/Neutral'].replace('Sacramento Kings', 'Sacramento', inplace=True)
-    df['Home/Neutral'].replace('Sacramento Kings', 'Sacramento', inplace=True)
-    df['Visitor/Neutral'].replace('San Antonio Spurs', 'San Antonio', inplace=True)
-    df['Home/Neutral'].replace('San Antonio Spurs', 'San Antonio', inplace=True)
-    df['Visitor/Neutral'].replace('Toronto Raptors', 'Toronto', inplace=True)
-    df['Home/Neutral'].replace('Toronto Raptors', 'Toronto', inplace=True)
-    df['Visitor/Neutral'].replace('Utah Jazz', 'Utah', inplace=True)
-    df['Home/Neutral'].replace('Utah Jazz', 'Utah', inplace=True)
-    df['Visitor/Neutral'].replace('Washington Wizards', 'Washington', inplace=True)
-    df['Home/Neutral'].replace('Washington Wizards', 'Washington', inplace=True)
+    # Define a dictionary mapping full team names to city names
+    team_to_city = {
+        'Atlanta Hawks': 'Atlanta',
+        'Boston Celtics': 'Boston',
+        'Brooklyn Nets': 'Brooklyn',
+        'Charlotte Hornets': 'Charlotte',
+        'Chicago Bulls': 'Chicago',
+        'Cleveland Cavaliers': 'Cleveland',
+        'Dallas Mavericks': 'Dallas',
+        'Denver Nuggets': 'Denver',
+        'Detroit Pistons': 'Detroit',
+        'Golden State Warriors': 'Golden State',
+        'Houston Rockets': 'Houston',
+        'Indiana Pacers': 'Indiana',
+        'Los Angeles Clippers': 'LA Clippers',
+        'Los Angeles Lakers': 'LA Lakers',
+        'Memphis Grizzlies': 'Memphis',
+        'Miami Heat': 'Miami',
+        'Milwaukee Bucks': 'Milwaukee',
+        'Minnesota Timberwolves': 'Minnesota',
+        'New Orleans Pelicans': 'New Orleans',
+        'New York Knicks': 'New York',
+        'Oklahoma City Thunder': 'Okla City',
+        'Orlando Magic': 'Orlando',
+        'Philadelphia 76ers': 'Philadelphia',
+        'Phoenix Suns': 'Phoenix',
+        'Portland Trail Blazers': 'Portland',
+        'Sacramento Kings': 'Sacramento',
+        'San Antonio Spurs': 'San Antonio',
+        'Toronto Raptors': 'Toronto',
+        'Utah Jazz': 'Utah',
+        'Washington Wizards': 'Washington'
+    }
+
+    # Apply the mapping for both Visitor/Neutral and Home/Neutral columns
+    df.replace({'Visitor/Neutral': team_to_city, 'Home/Neutral': team_to_city}, inplace=True)
+    
     return df
 
-lines = pd.DataFrame()
 
-i=0
-temp = 0
-while 1:
-    try:
-        gameLine = pd.read_html('https://www.espn.com/nba/lines/_/date')[i]
-        gameLine.columns = ['TEAM', 'REC', 'LINE', 'ML', 'BPI']
-        lines.loc[i, 'Home/Neutral'] = gameLine.loc[1, 'TEAM']
-        lines.loc[i, 'Visitor/Neutral'] = gameLine.loc[0, 'TEAM']
-        lines.loc[i, 'Line'] = gameLine.loc[0, 'LINE']
-        lines.loc[i, 'Spread'] = -1 * (gameLine.loc[1, 'LINE'])
-        if(lines.loc[i, 'Line'] < 100):
-            lines.loc[i, 'Line'] = gameLine.loc[1, 'LINE']
-            lines.loc[i, 'Spread'] = gameLine.loc[0, 'LINE']
-        i = i + 1
-    except:
-        break
+# Define the URL
+url = "https://api.the-odds-api.com/v4/sports/basketball_nba/odds/"
+
+# get commenceTimeTo (5am tomorrow)
+tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+tomorrow = tomorrow.replace(hour=5, minute=0, second=0, microsecond=0)
+tomorrow = tomorrow.isoformat() + 'Z'
+
+# Define query parameters
+params = {
+   "apiKey": "3823e701951ac2bb25b3bbced23e9602",
+   "regions": "us",
+   "markets": "totals,spreads",
+   "oddsFormat": "american",
+   "commenceTimeTo": tomorrow,
+   "bookmakers": "draftkings"
+}
+
+
+# Send the GET request
+response = requests.get(url, params=params)
+data = response.json()
+
+# Initialize an empty DataFrame with desired columns
+lines = pd.DataFrame(columns=['Home/Neutral', 'Visitor/Neutral', 'Line', 'Spread'])
+
+
+# Sample data for response (replace this with your actual request code)
+# response = requests.get(url, params=params)
+
+
+# Check for a successful response
+if response.status_code == 200:
+    data = response.json()  # parse JSON response
+  
+   # List to collect each row's data
+    rows = []
+  
+   # Extract data from each game
+    for game in data:
+        total_points = None
+        spread = None
+      
+        for bookmaker in game.get('bookmakers', []):
+            for market in bookmaker.get('markets', []):
+                if market.get('key') == 'totals':
+                    total_points = market['outcomes'][0]['point']  # Get the point total 
+                elif market.get('key') == 'spreads':
+                    spread = market['outcomes'][0]['point']  # Get the spread value
+        
+        spread = -spread
+       # Ensure both total_points and spread are available before adding
+        if total_points is not None and spread is not None:
+            rows.append({
+                'Home/Neutral': game['home_team'],
+                'Visitor/Neutral': game['away_team'],
+                'Line': total_points,
+                'Spread': spread
+            })
+  
+   # Concatenate all rows into the DataFrame
+    lines = pd.concat([lines, pd.DataFrame(rows)], ignore_index=True)
+
+else:
+    print('Error:', response.status_code, response.text)
+
+nameToCity(lines)
 
 ppg = pd.read_html('https://www.teamrankings.com/nba/stat/points-per-game')[0]
 oe = pd.read_html('https://www.teamrankings.com/nba/stat/offensive-efficiency')[0]
@@ -211,7 +241,7 @@ spreads = pd.DataFrame()
 
 for index, row in scores.iterrows():
     #add the date and home team from the scores dataframe to the games dataframe
-    games = games.append({'Date': row['Date'], 'HomeTeam': row['Home/Neutral'], 'AwayTeam' : row['Visitor/Neutral']}, ignore_index=True)
+    games = pd.concat([games, pd.DataFrame({'Date': row['Date'], 'HomeTeam': row['Home/Neutral'], 'AwayTeam': row['Visitor/Neutral']}, index=[0])], ignore_index=True)
     #fill in the rest of the stats based on the team name
     games.loc[(games['Date'] == row['Date'] ) & (games['HomeTeam'] == row['Home/Neutral']), 'HomePPG'] = df.loc[df['Team'] == row['Home/Neutral'], 'HomePPG'].iloc[0]
     games.loc[(games['Date'] == row['Date'] ) & (games['HomeTeam'] == row['Home/Neutral']), 'HomeOE'] = df.loc[df['Team'] == row['Home/Neutral'], 'HomeOE'].iloc[0]
@@ -264,8 +294,8 @@ for index, row in scores.iterrows():
         games.loc[(games['Date'] == row['Date'] ) & (games['AwayTeam'] == row['Visitor/Neutral']), 'AwayBackToBack'] = 0
 
     #add the actual game total and the actual game spread to the totals and spreads dataframes
-    totals = totals.append({'Total': row['PTS'] + row['PTS.1']}, ignore_index=True)
-    spreads = spreads.append({'Spread': row['PTS.1'] - row['PTS']}, ignore_index=True)
+    totals = pd.concat([totals, pd.DataFrame({'Total': [row['PTS'] + row['PTS.1']]})], ignore_index=True)
+    spreads = pd.concat([spreads, pd.DataFrame({'Spread': [row['PTS'] - row['PTS.1']]})], ignore_index=True)
 
 
 #print all the rows in the games dataframe
@@ -278,6 +308,9 @@ games['HomeTP'] = games['HomeTP'].str.replace('%', '').astype(float)
 games['AwayTP'] = games['AwayTP'].str.replace('%', '').astype(float)
 games['HomeOTP'] = games['HomeOTP'].str.replace('%', '').astype(float)
 games['AwayOTP'] = games['AwayOTP'].str.replace('%', '').astype(float)
+
+# drop all columns except for HomePPG, HomeOE, HomeTRB, HomeOPPG, HomeDE, HomeOTRB, HomePoss, HomeEPR, HomeOEPR, AwayPPG, AwayOE, AwayTRB, AwayOPPG, AwayDE, AwayOTRB, AwayPoss based on the data analysis
+games = games.drop(['HomePIP', 'HomeFBP', 'HomeTP', 'HomeFTP', 'HomeFPG', 'HomeOPIP', 'HomeOFBP', 'HomeOTP', 'HomeOFPG', 'AwayPIP', 'AwayFBP', 'AwayTP', 'AwayFTP', 'AwayFPG', 'AwayOPIP', 'AwayOFBP', 'AwayOTP', 'AwayOFPG'], axis=1)
 
 #games = games.drop(['Date', 'HomeTeam', 'AwayTeam'], axis=1)
 
@@ -296,13 +329,13 @@ games['AwayOTP'] = games['AwayOTP'].str.replace('%', '').astype(float)
 #if the predictions csv file exists, load the model, otherwise make a new one
 modelMake = True
 date = datetime.datetime.today().strftime('%m-%d-%Y')
-nameString = 'predictions/predictions' + date + '.csv'
+nameString = 'predictions-2025/predictions' + date + '.csv'
 if(os.path.exists(nameString)):
     modelMake = False
 
 if(modelMake):
     totalsModel = Sequential()
-    totalsModel.add(Dense(64, input_dim=38, activation='relu'))
+    totalsModel.add(Dense(64, input_dim=20, activation='relu'))
     totalsModel.add(Dense(64, activation='relu'))
     totalsModel.add(Dense(64, activation='relu'))
     totalsModel.add(Dense(1, activation='linear'))
@@ -312,7 +345,7 @@ if(modelMake):
     totalsModel.fit(games.drop(['Date', 'HomeTeam', 'AwayTeam'], axis=1), totals, epochs=300, batch_size=32)
 
     spreadsModel = Sequential()
-    spreadsModel.add(Dense(64, input_dim=38, activation='relu'))
+    spreadsModel.add(Dense(64, input_dim=20, activation='relu'))
     spreadsModel.add(Dense(64, activation='relu'))
     spreadsModel.add(Dense(64, activation='relu'))
     spreadsModel.add(Dense(1, activation='linear'))
@@ -321,11 +354,11 @@ if(modelMake):
 
     spreadsModel.fit(games.drop(['Date', 'HomeTeam', 'AwayTeam'], axis=1), spreads, epochs=300, batch_size=32)
 
-    totalsModel.save('models/totalsModel.h5')
-    spreadsModel.save('models/spreadsModel.h5')
+    totalsModel.save('models/totalsModel.keras')
+    spreadsModel.save('models/spreadsModel.keras')
 else:
-    totalsModel = load_model('models/totalsModel.h5')
-    spreadsModel = load_model('models/spreadsModel.h5')
+    totalsModel = load_model('models/totalsModel.keras')
+    spreadsModel = load_model('models/spreadsModel.keras')
 
 ##test the model using the test data
 #PredictedScores = model.predict(test)
@@ -361,7 +394,7 @@ todayGames = pd.DataFrame()
 
 for index, row in today.iterrows():
     #add the date and home team from the today dataframe to the games dataframe
-    todayGames = todayGames.append({'Date': row['Date'], 'HomeTeam': row['Home/Neutral'], 'AwayTeam' : row['Visitor/Neutral']}, ignore_index=True)
+    todayGames = pd.concat([todayGames, pd.DataFrame({'Date': row['Date'], 'HomeTeam': row['Home/Neutral'], 'AwayTeam': row['Visitor/Neutral']}, index=[0])], ignore_index=True)
     #fill in the rest of the stats based on the team name
     todayGames.loc[(todayGames['Date'] == row['Date'] ) & (todayGames['HomeTeam'] == row['Home/Neutral']), 'HomePPG'] = df.loc[df['Team'] == row['Home/Neutral'], 'HomePPG'].iloc[0]
     todayGames.loc[(todayGames['Date'] == row['Date'] ) & (todayGames['HomeTeam'] == row['Home/Neutral']), 'HomeOE'] = df.loc[df['Team'] == row['Home/Neutral'], 'HomeOE'].iloc[0]
@@ -421,6 +454,8 @@ todayGames['AwayOTP'] = todayGames['AwayOTP'].str.replace('%', '').astype(float)
 todayTeams = todayGames[['HomeTeam', 'AwayTeam']]
 
 todayGames = todayGames.drop(['Date', 'HomeTeam', 'AwayTeam'], axis=1)
+todayGames = todayGames.drop(['HomePIP', 'HomeFBP', 'HomeTP', 'HomeFTP', 'HomeFPG', 'HomeOPIP', 'HomeOFBP', 'HomeOTP', 'HomeOFPG', 'AwayPIP', 'AwayFBP', 'AwayTP', 'AwayFTP', 'AwayFPG', 'AwayOPIP', 'AwayOFBP', 'AwayOTP', 'AwayOFPG'], axis=1)
+
 totalPredictions = totalsModel.predict(todayGames)
 spreadPredictions = spreadsModel.predict(todayGames)  
 

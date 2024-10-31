@@ -9,7 +9,7 @@ while(True):
             date = time.strftime('%m-%d-%Y')
         if(date == 'y' or date == 'yesterday' or date == 'Y' or date == 'Yesterday' or date == 'YESTERDAY'):
             date = time.strftime('%m-%d-%Y', time.localtime(time.time() - 86400))
-        path = 'predictions/predictions' + date + '.csv'
+        path = 'predictions-2025/predictions' + date + '.csv'
         todayTeams = pd.read_csv(path)
         break
     except:

@@ -102,7 +102,7 @@ while 1:
             # create a list of every file in the predictions folder
             # and store the names in a list
             import os
-            path = 'predictions/'
+            path = 'predictions-2025/'
             files = os.listdir(path)
 
             # loop through the list of files and read them into a dataframe
@@ -126,13 +126,13 @@ while 1:
             print()
         elif(date == 'y' or date == 'yesterday' or date == 'Y' or date == 'Yesterday' or date == 'YESTERDAY'):
             date = time.strftime('%m-%d-%Y', time.localtime(time.time() - 86400))
-            path = 'predictions/predictions' + date + '.csv'
+            path = 'predictions-2025/predictions' + date + '.csv'
             df = pd.read_csv(path)
             print()
             print('Prediction results from', (str)(date) + ':')
             print()
         else:
-            path = 'predictions/predictions' + date + '.csv'
+            path = 'predictions-2025/predictions' + date + '.csv'
             df = pd.read_csv(path)
             print()
             print('Prediction results from', (str)(date) + ':')
