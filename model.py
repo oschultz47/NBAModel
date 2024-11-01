@@ -13,7 +13,6 @@ import datetime
 import os.path
 
 def nameToCity(df):
-    # Define a dictionary mapping full team names to city names
     team_to_city = {
         'Atlanta Hawks': 'Atlanta',
         'Boston Celtics': 'Boston',
@@ -47,21 +46,18 @@ def nameToCity(df):
         'Washington Wizards': 'Washington'
     }
 
-    # Apply the mapping for both Visitor/Neutral and Home/Neutral columns
     df.replace({'Visitor/Neutral': team_to_city, 'Home/Neutral': team_to_city}, inplace=True)
     
     return df
 
-
-# Define the URL
+# api url
 url = "https://api.the-odds-api.com/v4/sports/basketball_nba/odds/"
 
-# get commenceTimeTo (5am tomorrow)
+# get commenceTimeTo (5am tomorrow in UTC)
 tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
 tomorrow = tomorrow.replace(hour=5, minute=0, second=0, microsecond=0)
 tomorrow = tomorrow.isoformat() + 'Z'
 
-# Define query parameters
 params = {
    "apiKey": "3823e701951ac2bb25b3bbced23e9602",
    "regions": "us",
@@ -71,27 +67,16 @@ params = {
    "bookmakers": "draftkings"
 }
 
-
-# Send the GET request
 response = requests.get(url, params=params)
 data = response.json()
 
-# Initialize an empty DataFrame with desired columns
 lines = pd.DataFrame(columns=['Home/Neutral', 'Visitor/Neutral', 'Line', 'Spread'])
 
-
-# Sample data for response (replace this with your actual request code)
-# response = requests.get(url, params=params)
-
-
-# Check for a successful response
 if response.status_code == 200:
-    data = response.json()  # parse JSON response
+    data = response.json()
   
-   # List to collect each row's data
     rows = []
   
-   # Extract data from each game
     for game in data:
         total_points = None
         spread = None
@@ -99,12 +84,11 @@ if response.status_code == 200:
         for bookmaker in game.get('bookmakers', []):
             for market in bookmaker.get('markets', []):
                 if market.get('key') == 'totals':
-                    total_points = market['outcomes'][0]['point']  # Get the point total 
+                    total_points = market['outcomes'][0]['point'] 
                 elif market.get('key') == 'spreads':
-                    spread = market['outcomes'][0]['point']  # Get the spread value
+                    spread = market['outcomes'][0]['point']
         
-        spread = -spread
-       # Ensure both total_points and spread are available before adding
+        spread = -spread # spread is opposite of what we want
         if total_points is not None and spread is not None:
             rows.append({
                 'Home/Neutral': game['home_team'],
@@ -113,7 +97,6 @@ if response.status_code == 200:
                 'Spread': spread
             })
   
-   # Concatenate all rows into the DataFrame
     lines = pd.concat([lines, pd.DataFrame(rows)], ignore_index=True)
 
 else:
@@ -297,12 +280,6 @@ for index, row in scores.iterrows():
     totals = pd.concat([totals, pd.DataFrame({'Total': [row['PTS'] + row['PTS.1']]})], ignore_index=True)
     spreads = pd.concat([spreads, pd.DataFrame({'Spread': [row['PTS'] - row['PTS.1']]})], ignore_index=True)
 
-
-#print all the rows in the games dataframe
-pd.set_option('display.max_rows', 800)
-#print just the Date, HomeTeam, and HomeBackToBack columns
-#print(games[['Date', 'HomeTeam', 'HomeBackToBack']])
-
 #convert time of possession and opponent time of possession percentage from string to float
 games['HomeTP'] = games['HomeTP'].str.replace('%', '').astype(float)
 games['AwayTP'] = games['AwayTP'].str.replace('%', '').astype(float)
@@ -311,19 +288,6 @@ games['AwayOTP'] = games['AwayOTP'].str.replace('%', '').astype(float)
 
 # drop all columns except for HomePPG, HomeOE, HomeTRB, HomeOPPG, HomeDE, HomeOTRB, HomePoss, HomeEPR, HomeOEPR, AwayPPG, AwayOE, AwayTRB, AwayOPPG, AwayDE, AwayOTRB, AwayPoss based on the data analysis
 games = games.drop(['HomePIP', 'HomeFBP', 'HomeTP', 'HomeFTP', 'HomeFPG', 'HomeOPIP', 'HomeOFBP', 'HomeOTP', 'HomeOFPG', 'AwayPIP', 'AwayFBP', 'AwayTP', 'AwayFTP', 'AwayFPG', 'AwayOPIP', 'AwayOFBP', 'AwayOTP', 'AwayOFPG'], axis=1)
-
-#games = games.drop(['Date', 'HomeTeam', 'AwayTeam'], axis=1)
-
-##remove every 10th row from the games dataframe to use as test data
-#test = games.iloc[::10, :]
-#testTotals = totals.iloc[::10, :]  
-#games = games.drop(games.index[::10])
-#totals = totals.drop(totals.index[::10])
-#testSpreads = spreads.iloc[::10, :]
-#spreads = spreads.drop(spreads.index[::10])
-
-
-#make a model using keras that predicts the total points scored in a game based on the data in the games dataframe
 
 #Set to true to make a new model, false to load an existing model
 #if the predictions csv file exists, load the model, otherwise make a new one
@@ -359,36 +323,6 @@ if(modelMake):
 else:
     totalsModel = load_model('models/totalsModel.keras')
     spreadsModel = load_model('models/spreadsModel.keras')
-
-##test the model using the test data
-#PredictedScores = model.predict(test)
-#
-##test the model using the test data
-#PredictedSpreads = model2.predict(test)
-#
-##make a new dataframe with the predicted scores and actual scores
-#predictions = pd.DataFrame()
-#predictions['PredictedScore'] = PredictedScores.flatten()
-#predictions['ActualScore'] = testTotals.values.flatten()
-#predictions['PredictedSpread'] = PredictedSpreads.flatten()
-#predictions['ActualSpread'] = testSpreads.values.flatten()
-#predictions['DifferenceScore'] = predictions['PredictedScore'] - predictions['ActualScore']
-#predictions['DifferenceSpread'] = predictions['PredictedSpread'] - predictions['ActualSpread']
-#
-#print(predictions.head(100))
-#
-#correctScore = 0
-#correctSpread = 0
-#for index, row in predictions.iterrows():
-#    if(abs(row['DifferenceScore']) < 10):
-#        correctScore = correctScore + 1
-#    if(abs(row['DifferenceSpread']) < 5):
-#        correctSpread = correctSpread + 1
-#
-#print('Correct Score: ' + str(correctScore) + ' out of ' + str(predictions.shape[0]))
-#print('Correct Score Percentage: ' + str(correctScore/predictions.shape[0]))
-#print('Correct Spread: ' + str(correctSpread) + ' out of ' + str(predictions.shape[0]))
-#print('Correct Spread Percentage: ' + str(correctSpread/predictions.shape[0]))
 
 todayGames = pd.DataFrame()
 

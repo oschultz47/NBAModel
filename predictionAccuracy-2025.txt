@@ -1,0 +1,12 @@
+Prediction results from all games:
+
+The model predicted 3 out of 4 totals correctly, or 75.0%
+The model predicted 3 out of 4 spreads correctly, or 75.0%
+The model predicted 3 out of 4 winners correctly, or 75.0%
+
+The model predicted 6 out of 8 picks correctly, or 75.0%
+
+On picks where the model differed from the total by 7 or more points, the model predicted 2 out of 2 totals correctly, or 100.0%
+On picks where the model differed from the spread by 5 or more points, the model predicted 1 out of 1 spreads correctly, or 100.0%
+
+On picks where the model was "confident" it picked 3 out of 3 picks correctly, or 100.0%

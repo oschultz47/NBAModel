@@ -2,6 +2,44 @@ import pandas as pd
 import time
 import sys
 
+def nameToCity(df):
+    team_to_city = {
+        'Atlanta Hawks': 'Atlanta',
+        'Boston Celtics': 'Boston',
+        'Brooklyn Nets': 'Brooklyn',
+        'Charlotte Hornets': 'Charlotte',
+        'Chicago Bulls': 'Chicago',
+        'Cleveland Cavaliers': 'Cleveland',
+        'Dallas Mavericks': 'Dallas',
+        'Denver Nuggets': 'Denver',
+        'Detroit Pistons': 'Detroit',
+        'Golden State Warriors': 'Golden State',
+        'Houston Rockets': 'Houston',
+        'Indiana Pacers': 'Indiana',
+        'Los Angeles Clippers': 'LA Clippers',
+        'Los Angeles Lakers': 'LA Lakers',
+        'Memphis Grizzlies': 'Memphis',
+        'Miami Heat': 'Miami',
+        'Milwaukee Bucks': 'Milwaukee',
+        'Minnesota Timberwolves': 'Minnesota',
+        'New Orleans Pelicans': 'New Orleans',
+        'New York Knicks': 'New York',
+        'Oklahoma City Thunder': 'Okla City',
+        'Orlando Magic': 'Orlando',
+        'Philadelphia 76ers': 'Philadelphia',
+        'Phoenix Suns': 'Phoenix',
+        'Portland Trail Blazers': 'Portland',
+        'Sacramento Kings': 'Sacramento',
+        'San Antonio Spurs': 'San Antonio',
+        'Toronto Raptors': 'Toronto',
+        'Utah Jazz': 'Utah',
+        'Washington Wizards': 'Washington'
+    }
+
+    df.replace({'Visitor/Neutral': team_to_city, 'Home/Neutral': team_to_city}, inplace=True)
+    
+    return df
+
 # read in all the data from the csv files in the predictions folder
 # and store them in one dataframe
 df = pd.DataFrame()
@@ -24,66 +62,7 @@ scoresApr.drop(['Start (ET)', 'Unnamed: 6', 'Unnamed: 7', 'Attend.', 'Notes', 'A
 
 scores = pd.concat([scoresOct, scoresNov, scoresDec, scoresJan, scoresFeb, scoresMar, scoresApr], ignore_index=True)
 
-scores['Visitor/Neutral'].replace('Atlanta Hawks', 'Atlanta', inplace=True)
-scores['Home/Neutral'].replace('Atlanta Hawks', 'Atlanta', inplace=True)
-scores['Visitor/Neutral'].replace('Boston Celtics', 'Boston', inplace=True)
-scores['Home/Neutral'].replace('Boston Celtics', 'Boston', inplace=True)
-scores['Visitor/Neutral'].replace('Brooklyn Nets', 'Brooklyn', inplace=True)
-scores['Home/Neutral'].replace('Brooklyn Nets', 'Brooklyn', inplace=True)
-scores['Visitor/Neutral'].replace('Charlotte Hornets', 'Charlotte', inplace=True)
-scores['Home/Neutral'].replace('Charlotte Hornets', 'Charlotte', inplace=True)
-scores['Visitor/Neutral'].replace('Chicago Bulls', 'Chicago', inplace=True)
-scores['Home/Neutral'].replace('Chicago Bulls', 'Chicago', inplace=True)
-scores['Visitor/Neutral'].replace('Cleveland Cavaliers', 'Cleveland', inplace=True)
-scores['Home/Neutral'].replace('Cleveland Cavaliers', 'Cleveland', inplace=True)
-scores['Visitor/Neutral'].replace('Dallas Mavericks', 'Dallas', inplace=True)
-scores['Home/Neutral'].replace('Dallas Mavericks', 'Dallas', inplace=True)
-scores['Visitor/Neutral'].replace('Denver Nuggets', 'Denver', inplace=True)
-scores['Home/Neutral'].replace('Denver Nuggets', 'Denver', inplace=True)
-scores['Visitor/Neutral'].replace('Detroit Pistons', 'Detroit', inplace=True)
-scores['Home/Neutral'].replace('Detroit Pistons', 'Detroit', inplace=True)
-scores['Visitor/Neutral'].replace('Golden State Warriors', 'Golden State', inplace=True)
-scores['Home/Neutral'].replace('Golden State Warriors', 'Golden State', inplace=True)
-scores['Visitor/Neutral'].replace('Houston Rockets', 'Houston', inplace=True)
-scores['Home/Neutral'].replace('Houston Rockets', 'Houston', inplace=True)
-scores['Visitor/Neutral'].replace('Indiana Pacers', 'Indiana', inplace=True)
-scores['Home/Neutral'].replace('Indiana Pacers', 'Indiana', inplace=True)
-scores['Visitor/Neutral'].replace('Los Angeles Clippers', 'LA Clippers', inplace=True)
-scores['Home/Neutral'].replace('Los Angeles Clippers', 'LA Clippers', inplace=True)
-scores['Visitor/Neutral'].replace('Los Angeles Lakers', 'LA Lakers', inplace=True)
-scores['Home/Neutral'].replace('Los Angeles Lakers', 'LA Lakers', inplace=True)
-scores['Visitor/Neutral'].replace('Memphis Grizzlies', 'Memphis', inplace=True) 
-scores['Home/Neutral'].replace('Memphis Grizzlies', 'Memphis', inplace=True)
-scores['Visitor/Neutral'].replace('Miami Heat', 'Miami', inplace=True)
-scores['Home/Neutral'].replace('Miami Heat', 'Miami', inplace=True)
-scores['Visitor/Neutral'].replace('Milwaukee Bucks', 'Milwaukee', inplace=True)
-scores['Home/Neutral'].replace('Milwaukee Bucks', 'Milwaukee', inplace=True)
-scores['Visitor/Neutral'].replace('Minnesota Timberwolves', 'Minnesota', inplace=True)
-scores['Home/Neutral'].replace('Minnesota Timberwolves', 'Minnesota', inplace=True)
-scores['Visitor/Neutral'].replace('New Orleans Pelicans', 'New Orleans', inplace=True)
-scores['Home/Neutral'].replace('New Orleans Pelicans', 'New Orleans', inplace=True)
-scores['Visitor/Neutral'].replace('New York Knicks', 'New York', inplace=True)
-scores['Home/Neutral'].replace('New York Knicks', 'New York', inplace=True)
-scores['Visitor/Neutral'].replace('Oklahoma City Thunder', 'Okla City', inplace=True)
-scores['Home/Neutral'].replace('Oklahoma City Thunder', 'Okla City', inplace=True)
-scores['Visitor/Neutral'].replace('Orlando Magic', 'Orlando', inplace=True)
-scores['Home/Neutral'].replace('Orlando Magic', 'Orlando', inplace=True)
-scores['Visitor/Neutral'].replace('Philadelphia 76ers', 'Philadelphia', inplace=True)
-scores['Home/Neutral'].replace('Philadelphia 76ers', 'Philadelphia', inplace=True)
-scores['Visitor/Neutral'].replace('Phoenix Suns', 'Phoenix', inplace=True)
-scores['Home/Neutral'].replace('Phoenix Suns', 'Phoenix', inplace=True)
-scores['Visitor/Neutral'].replace('Portland Trail Blazers', 'Portland', inplace=True)
-scores['Home/Neutral'].replace('Portland Trail Blazers', 'Portland', inplace=True)
-scores['Visitor/Neutral'].replace('Sacramento Kings', 'Sacramento', inplace=True)
-scores['Home/Neutral'].replace('Sacramento Kings', 'Sacramento', inplace=True)
-scores['Visitor/Neutral'].replace('San Antonio Spurs', 'San Antonio', inplace=True)
-scores['Home/Neutral'].replace('San Antonio Spurs', 'San Antonio', inplace=True)
-scores['Visitor/Neutral'].replace('Toronto Raptors', 'Toronto', inplace=True)
-scores['Home/Neutral'].replace('Toronto Raptors', 'Toronto', inplace=True)
-scores['Visitor/Neutral'].replace('Utah Jazz', 'Utah', inplace=True)
-scores['Home/Neutral'].replace('Utah Jazz', 'Utah', inplace=True)
-scores['Visitor/Neutral'].replace('Washington Wizards', 'Washington', inplace=True)
-scores['Home/Neutral'].replace('Washington Wizards', 'Washington', inplace=True)
+nameToCity(scores)
 
 scores['Date'] = pd.to_datetime(scores['Date'])
 #convert date to string in 01-01-2020 format
@@ -96,8 +75,8 @@ while 1:
     try:
         date = input('Enter the date of the games you want to see (MM-DD-YYYY): ')
         if(date == 'f' or date == 'F' or date == 'FILE' or date == 'file' or date == 'File'):
-            print('Printing results to predictionAccuracy.txt...')
-            sys.stdout = open('predictionAccuracy.txt', 'w')
+            print('Printing results to predictionAccuracy-2025.txt...')
+            sys.stdout = open('predictionAccuracy-2025.txt', 'w')
         if(date == '' or date == 'a' or date == 'all' or date == 'A' or date == 'All' or date == 'ALL' or date == 'f' or date == 'F' or date == 'FILE' or date == 'file' or date == 'File'):
             # create a list of every file in the predictions folder
             # and store the names in a list
@@ -112,8 +91,7 @@ while 1:
 
             for file in files:
                 tempdf = pd.read_csv(path + file)
-                df = df.append(tempdf, ignore_index=True)
-
+                df = pd.concat([df, tempdf], ignore_index=True)
             #print(df.head())
 
             # drop all rows where the date is today or in the future
