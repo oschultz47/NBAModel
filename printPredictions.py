@@ -25,9 +25,9 @@ for index, row in todayTeams.iterrows():
     if row['PickedTotal'] == 1:
         print('*****  ', end = '')
     if row['TotalPredictions'] > row['Line']:
-        print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' (' + (str)(row['Line']) + '): ' + 'OVER BY', (str)(row['TotalPredictions'] - row['Line']), end = '')
+        print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' (' + (str)(row['Line']) + '): ' + 'OVER BY', (str)(row['TotalPredictions'] - row['Line']), end = '')
     else:
-        print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' (' + (str)(row['Line']) + '): ' +  'UNDER BY ', (str)(row['Line'] - row['TotalPredictions']), end = '')
+        print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' (' + (str)(row['Line']) + '): ' +  'UNDER BY ', (str)(row['Line'] - row['TotalPredictions']), end = '')
     if row['PickedTotal'] == 1:
         print('  *****', end = '')
     print()
@@ -43,14 +43,14 @@ for index, row in todayTeams.iterrows():
         print('*****  ', end = '')
     if row['SpreadPredictions'] > row['Spread']:
         if(row['Spread'] > 0):
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])), end = '')
+            print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])), end = '')
         else:
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])), end = '')
+            print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])), end = '')
     else:
         if(row['Spread'] > 0):
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])), end = '')
+            print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])), end = '')
         else:
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): '  + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])), end = '')
+            print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): '  + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])), end = '')
     if row['PickedSpread'] == 1:
         print('  *****', end = '')
     print()

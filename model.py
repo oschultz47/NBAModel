@@ -414,10 +414,10 @@ todayTeams['PickedTotal'] = 0
 
 for index, row in todayTeams.iterrows():
     if row['TotalPredictions'] > row['Line'] + 7:
-        print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' (' + (str)(row['Line']) + '): ' + 'OVER BY', (str)(row['TotalPredictions'] - row['Line']))
+        print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' (' + (str)(row['Line']) + '): ' + 'OVER BY', (str)(row['TotalPredictions'] - row['Line']))
         todayTeams.loc[index, 'PickedTotal'] += 1
     elif row['TotalPredictions'] < row['Line'] - 7:
-        print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' (' + (str)(row['Line']) + '): ' +  'UNDER BY ', (str)(row['Line'] - row['TotalPredictions']))
+        print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' (' + (str)(row['Line']) + '): ' +  'UNDER BY ', (str)(row['Line'] - row['TotalPredictions']))
         todayTeams.loc[index, 'PickedTotal'] += 1
     else:
         continue
@@ -430,17 +430,17 @@ print()
 for index, row in todayTeams.iterrows():
     if row['SpreadPredictions'] > row['Spread'] + 5:
         if(row['Spread'] > 0):
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
+            print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
             todayTeams.loc[index, 'PickedSpread'] += 1
         else:
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
+            print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): ' + row['HomeTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
             todayTeams.loc[index, 'PickedSpread'] += 1
     elif row['SpreadPredictions'] < row['Spread'] - 5:
         if(row['Spread'] > 0):
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
+            print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' ('+ row['HomeTeam'] + ' -' + (str)(row['Spread']) + '): ' + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
             todayTeams.loc[index, 'PickedSpread'] += 1
         else:
-            print(row['HomeTeam'] + ' @ ' + row['AwayTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): '  + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
+            print(row['AwayTeam'] + ' @ ' + row['HomeTeam'] + ' ('+ row['AwayTeam'] + ' ' + (str)(row['Spread']) + '): '  + row['AwayTeam'] + ' COVERS BY', (str)(abs(row['Spread'] - row['SpreadPredictions'])))
             todayTeams.loc[index, 'PickedSpread'] += 1
     else:
         continue
