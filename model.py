@@ -85,10 +85,11 @@ if response.status_code == 200:
             for market in bookmaker.get('markets', []):
                 if market.get('key') == 'totals':
                     total_points = market['outcomes'][0]['point'] 
-                elif market.get('key') == 'spreads':
+                elif market.get('key') == 'spreads' and market['outcomes'][0]['name'] == game['away_team']:
                     spread = market['outcomes'][0]['point']
+                elif market.get('key') == 'spreads' and market['outcomes'][0]['name'] == game['home_team']:
+                    spread = market['outcomes'][1]['point']
         
-        spread = -spread # spread is opposite of what we want
         if total_points is not None and spread is not None:
             rows.append({
                 'Home/Neutral': game['home_team'],
